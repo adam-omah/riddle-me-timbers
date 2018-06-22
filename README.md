@@ -33,11 +33,13 @@ Layout mockups:
 * [Mobile](https://wireframe.cc/8MwcuT)
 * [Desktop + tablet](https://wireframe.cc/ALckWz)
 
+
 Initial Idea's for tests:
 1. Test for invalid answer
 2. Test for valid answer
 3. Test for score addition
 4. Test for ranking on leaderboard
+
 
 1. if question is 1+1 and answer of 1 is inputted, fails.
 2. if question is 1+1 and answer of 2 is given, test passes.
