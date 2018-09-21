@@ -7,8 +7,13 @@
     <title>Riddle Me Timbers!</title>
 </head>
 <body>
+    <h1>Welome, {{ username }} </h1>
+    <h2>Your Current score is {{ current_score }} <br> This is round {{ riddle_round }} you have {{ attempts_remaining }} attempts to complete this round</h2>
+    
+    <h2> This is your question: {{ question }} </h2>
+    <h2> This is your question: {{ answer }} </h2>
     <form method="POST">
-        <label for="riddle_guess">Username: </label>
+        <label for="riddle_guess">Your Answer:</label>
         <input type="text" id="riddle_guess" name="riddle_guess"/>
         <button>Check Answer!</button>
     </form>
