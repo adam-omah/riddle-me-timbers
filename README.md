@@ -7,6 +7,7 @@ Players will get a point per answer and after a set time the player with the mos
 
 The game will be created with Python and Flask Framework.
 
+Questions taken from [Pirate questions for kids](http://riddles-for-kids.org/12-pirate-riddles-for-kids/)
 
 
 ## User's Journey:
