@@ -18,6 +18,12 @@ score = 0
 riddle_round = 0
 attempts_remaining = 2
 
+player_one_score = 0
+player_two_score = 0
+player_three_score = 0
+player_four_score = 0
+
+
 
 def write_to_file(filename,data):
     """ handle the process of writing data to a file """
@@ -43,6 +49,12 @@ def reset_attempts():
     global attempts_remaining
     attempts_remaining = 2
 
+def skip_question():
+    global riddle_round
+    riddle_round += 1
+    global attempts_remaining
+    attempts_remaining = 2
+    
     
 @app.route('/', methods=["GET", "POST"])
 def index():
@@ -53,8 +65,6 @@ def index():
 
 @app.route('/<username>', methods=["GET", "POST"])
 def user(username):
-
-    question = questions[riddle_round]
     
     if attempts_remaining == 0:
         add_one_round()
@@ -66,6 +76,8 @@ def user(username):
         if  riddle_guess == answers[riddle_round]:
             add_one_score()
             add_one_round()
+        elif riddle_guess == "skip":
+            skip_question()
         else:
             remove_attempt()
         
