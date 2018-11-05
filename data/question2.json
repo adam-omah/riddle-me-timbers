@@ -1,0 +1,52 @@
+{
+[
+  {
+    "question": "If you are a pirate And you get in a fight You might need to wear this If you lose half your sight",
+    "answer" : "eye patch",
+  },
+  {
+    "question": "This item contains shiny things You'll have to wait to find out what It's what you'll end up digging up Once you've found the X that marks the spot",
+    "answer" : "treasure chest",
+  },
+  {
+    "question": "It sits on a pirate's shoulder And doesn't ever fly away The funniest thing about it Is that it repeats what you say",
+    "answer" : "parrot",
+  },
+  {
+    "question": "The image on this pirate flag Is sure to give people a fright It has parts of a skeleton On a background as dark as night",
+    "answer" : "jolly roger",
+  },
+  {
+    "question": "A ship drops this to stay still Even if the water's calm It is also a tattoo You can see on Popeye's arm",
+    "answer" : "anchor",
+  },
+  {
+    "question": "A pirate who's lost a tibia Might replace it with this thing That will help him to still walk around Instead of just hopping",
+    "answer" : "wooden leg",
+  },
+  {
+    "question": "This was a famous pirate One who was truly feared A color and some facial hair This pirate was _ _ _ _ _ _ _ _ _ _",
+    "answer" : "blackbeard",
+  },
+  {
+    "question": "When looking for buried gold This item helps a lot As on this piece of paper Is where X marks the spot",
+    "answer" : "treasure map",
+  },
+  {
+    "question": "If you're sailing on a pirate ship To find your way you'll need at least This item that will help guide the way By pointing north, south, west and east",
+    "answer" : "compass",
+  },
+  {
+    "question": "This pirate phrase is what you get If you take a two by four And then place it on a shelf Inside of a freezer door",
+    "answer" : "shiver me timbers",
+  },
+  {
+    "question": "If you follow a treasure map At the end of a successful quest You might hope to find this inside Of the buried treasure chest",
+    "answer" : "gold coins",
+  },
+  {
+    "question": "If you want to be a pirate You will need this without fail So that you can travel around You need something you can sail",
+    "answer" : "ship",
+  }
+]
+}

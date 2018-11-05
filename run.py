@@ -1,109 +1,88 @@
 import os
 from datetime import datetime
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, make_response, request, redirect, session, g
 from wtforms import Form
 import random
 from random import shuffle
+import utills
+from utills import write_to_file, add_one_score, add_one, remove_attempt, reset_attempts,skip_question, session_cookie, set_score, set_attempts, set_round
+import json
 
 app = Flask(__name__)
-
+app.secret_key = os.urandom(24)
 
 # this will later be the riddle data file. (probably json.)
-
-questions = ["If you are a pirate And you get in a fight You might need to wear this If you lose half your sight","This item contains shiny things You'll have to wait to find out what It's what you'll end up digging up Once you've found the X that marks the spot","It sits on a pirate's shoulder And doesn't ever fly away The funniest thing about it Is that it repeats what you say","The image on this pirate flag Is sure to give people a fright It has parts of a skeleton On a background as dark as night","A ship drops this to stay still Even if the water's calm It is also a tattoo You can see on Popeye's arm","A pirate who's lost a tibia Might replace it with this thing That will help him to still walk around Instead of just hopping","This was a famous pirate One who was truly feared A color and some facial hair This pirate was _ _ _ _ _ _ _ _ _ _","When looking for buried gold This item helps a lot As on this piece of paper Is where X marks the spot","If you're sailing on a pirate ship To find your way you'll need at least This item that will help guide the way By pointing north, south, west and east","This pirate phrase is what you get If you take a two by four And then place it on a shelf Inside of a freezer door","If you follow a treasure map At the end of a successful quest You might hope to find this inside Of the buried treasure chest","If you want to be a pirate You will need this without fail So that you can travel around You need something you can sail"]
-answers = ["eye patch","treasure chest","parrot","jolly roger","anchor","wooden leg","blackbeard","treasure map","compass","shiver me timbers","gold coins","ship"]
 
 question_asked = [0,1,2,3,4,5,6,7,8,9,10,11,12]
 
 
-score = 0
 riddle_round = 0
+score = 0
 attempts_remaining = 2
-
-player_one_score = 0
-player_two_score = 0
-player_three_score = 0
-player_four_score = 0
-
-
-
-def write_to_file(filename,data):
-    """ handle the process of writing data to a file """
-    with open(filename, "a") as file:
-        file.writelines(data)
-
-def end_game():
-    return render_template("end_game.html")
-    
-def add_one_round():
-    global riddle_round
-    riddle_round += 1
-    
-def add_one_score():
-    global score
-    score += 1
-    
-def remove_attempt():
-    global attempts_remaining
-    attempts_remaining -= 1
-
-def reset_attempts():
-    global attempts_remaining
-    attempts_remaining = 2
-
-def skip_question():
-    global riddle_round
-    riddle_round += 1
-    global attempts_remaining
-    attempts_remaining = 2
-
-def shuffle_questions():
-    global question_asked
-    shuffle(question_asked)
-
-    
     
 @app.route('/', methods=["GET", "POST"])
 def index():
+    session.pop('user', None)
     if request.method == ("POST"):
-        write_to_file("data/users.txt", request.form["username"] + "\n")
+        session['user'] = request.form['username']
         return redirect(request.form["username"])
     return render_template("index.html")
 
+
+# Set g.user to none before request, set g.user to user if user is in session
+@app.before_request
+def check_if_session():
+    g.user = None
+    if 'user' in session :
+        g.user = session['user']
+        
+        
+
 @app.route('/<username>', methods=["GET", "POST"])
 def user(username):
+    # check to see if a user is in session before going to the game page
     
-    if riddle_round == 0 and attempts_remaining == 2:
-        shuffle_questions()
+    with open('data/questions.json') as json_data:
+        parsed_json = json.load(json_data)
+            
     
-    if riddle_round == 9:
-        return render_template("end_game.html")
+    if g.user:
+        set_attempts()
+        set_round()
+        set_score()
+        return render_template("single_player.html",
+                            username = username,
+                            question = parsed_json[riddle_round]["question"], 
+                            current_score= [score], 
+                            riddle_round= [riddle_round],
+                            attempts_remaining = [attempts_remaining],
+                            answer = parsed_json[riddle_round]["answer"])
+    else:
+        return redirect("index.html")
     
-    if attempts_remaining == 0:
-        add_one_round()
-        reset_attempts()
     
     if request.method == ("POST"):
         riddle_guess = request.form["riddle_guess"].lower()
  
-        if  riddle_guess == answers[question_asked[riddle_round]]:
-            add_one_score()
-            add_one_round()
+        if  riddle_guess == parsed_json[session['riddle_round']]['answer']:
+            session['score'] +=1
+            session['riddle_round'] += 1
+            session.modified = True
         elif riddle_guess == "skip":
-            skip_question()
+            session['riddle_round'] += 1
+            session.modified = True
         else:
-            remove_attempt()
-        
-        
-        
-     # Render single player mode for username + identifiers for html page elements.
-    return render_template("single_player.html",
-                            username=username,
-                            question = questions[question_asked[riddle_round]], 
-                            current_score=score, 
-                            riddle_round=riddle_round,
-                            attempts_remaining=attempts_remaining + 1,
-                            answer=answers[question_asked[riddle_round]])
+            session['attempts_remaining'] -= 1
+            session.modified = True
+    
+    if session['riddle_round'] == 9:
+        return render_template("end_game.html")
+    
+    if session['attempts_remaining'] == 0:
+        session['riddle_round'] += 1
+        session['attempts_remaining'] = 2
+        session.modified = True
+    
         
 
 
