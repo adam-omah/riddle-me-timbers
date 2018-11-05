@@ -15,10 +15,6 @@ app.secret_key = os.urandom(24)
 
 question_asked = [0,1,2,3,4,5,6,7,8,9,10,11,12]
 
-
-riddle_round = 0
-score = 0
-attempts_remaining = 2
     
 @app.route('/', methods=["GET", "POST"])
 def index():
@@ -44,28 +40,18 @@ def check_if_session():
 @app.route('/<username>', methods=["GET", "POST"])
 def user(username):
     # check to see if a user is in session before going to the game page
-    
     with open('data/questions.json') as json_data:
         parsed_json = json.load(json_data)
-            
     
-    if g.user:
-        return render_template("single_player.html",
-                            username = username,
-                            question = parsed_json[session["riddle_round"]]["question"], 
-                            current_score= session["score"], 
-                            riddle_round= session["riddle_round"],
-                            attempts_remaining = session["attempts_remaining"] + 1,
-                            answer = parsed_json[session["riddle_round"]]["answer"])
-    else:
+    if g.user == None:
         return redirect("index.html")
+        
     
     
-    if request.method == ("POST"):
+    if request.method == "POST" :
         riddle_guess = request.form["riddle_guess"].lower()
- 
         if  riddle_guess == parsed_json[session["riddle_round"]]["answer"]:
-            session["score"] +=1
+            session["score"] += 1
             session["riddle_round"] += 1
             session.modified = True
         elif riddle_guess == "skip":
@@ -80,7 +66,14 @@ def user(username):
         else:
             session['attempts_remaining'] -= 1
             session.modified = True
-    
+            
+    return render_template("single_player.html",
+                            username = username,
+                            question = parsed_json[session["riddle_round"]]["question"], 
+                            current_score= session["score"], 
+                            riddle_round= session["riddle_round"],
+                            attempts_remaining = session["attempts_remaining"] + 1,
+                            answer = parsed_json[session["riddle_round"]]["answer"])
         
 
 
