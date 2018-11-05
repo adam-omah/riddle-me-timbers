@@ -8,24 +8,6 @@ def write_to_file(filename,data):
 def end_game():
     return render_template("end_game.html")
 
-def add_one(variable):
-    session['variable'] = session['variable'] + 1
-    session.modified = True
-    
-def session_cookie(name,key,value):
-    resp = make_response('name')
-    resp.set_cookie('key','value')
-
-def set_score():
-    user_score = make_response('User score')
-    user_score.set_cookie('user_score','0')
-    return user_score
-
-def set_round():
-    user_round = make_response('User round')
-    user_round.set_cookie('round','0')
-    return user_round
-
 def set_attempts():
     user_attempts = make_response('User Attempts')
     user_attempts.set_cookie('user_attempts_remaining','2')

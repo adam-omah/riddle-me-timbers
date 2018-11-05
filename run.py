@@ -5,7 +5,7 @@ from wtforms import Form
 import random
 from random import shuffle
 import utills
-from utills import write_to_file, add_one_score, add_one, remove_attempt, reset_attempts,skip_question, session_cookie, set_score, set_attempts, set_round
+from utills import write_to_file, add_one_score, remove_attempt, reset_attempts,skip_question
 import json
 
 app = Flask(__name__)
@@ -25,6 +25,9 @@ def index():
     session.pop('user', None)
     if request.method == ("POST"):
         session['user'] = request.form['username']
+        session["score"] = 0
+        session["riddle_round"] = 0
+        session["attempts_remaining"] = 2
         return redirect(request.form["username"])
     return render_template("index.html")
 
@@ -47,16 +50,13 @@ def user(username):
             
     
     if g.user:
-        set_attempts()
-        set_round()
-        set_score()
         return render_template("single_player.html",
                             username = username,
-                            question = parsed_json[riddle_round]["question"], 
-                            current_score= [score], 
-                            riddle_round= [riddle_round],
-                            attempts_remaining = [attempts_remaining],
-                            answer = parsed_json[riddle_round]["answer"])
+                            question = parsed_json[session["riddle_round"]]["question"], 
+                            current_score= session["score"], 
+                            riddle_round= session["riddle_round"],
+                            attempts_remaining = session["attempts_remaining"] + 1,
+                            answer = parsed_json[session["riddle_round"]]["answer"])
     else:
         return redirect("index.html")
     
@@ -64,24 +64,22 @@ def user(username):
     if request.method == ("POST"):
         riddle_guess = request.form["riddle_guess"].lower()
  
-        if  riddle_guess == parsed_json[session['riddle_round']]['answer']:
-            session['score'] +=1
-            session['riddle_round'] += 1
+        if  riddle_guess == parsed_json[session["riddle_round"]]["answer"]:
+            session["score"] +=1
+            session["riddle_round"] += 1
             session.modified = True
         elif riddle_guess == "skip":
-            session['riddle_round'] += 1
+            session["riddle_round"] += 1
+            session.modified = True
+        elif session["riddle_round"] == 9:
+            return render_template("end_game.html")
+        elif session["attempts_remaining"] == 0:
+            session["riddle_round"] += 1
+            session["attempts_remaining"] = 2
             session.modified = True
         else:
             session['attempts_remaining'] -= 1
             session.modified = True
-    
-    if session['riddle_round'] == 9:
-        return render_template("end_game.html")
-    
-    if session['attempts_remaining'] == 0:
-        session['riddle_round'] += 1
-        session['attempts_remaining'] = 2
-        session.modified = True
     
         
 
