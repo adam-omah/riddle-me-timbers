@@ -1,36 +1,37 @@
-from flask import make_response
+from flask import make_response, session
+import json
 
-def write_to_file(filename,data):
-    """ handle the process of writing data to a file """
-    with open(filename, "a") as file:
-        file.writelines(data)
+        
+def write_score(score, name, scores, filename, separator=','):
+    """writes a score with a name to a file, in a specified format"""
+    scores.append((score, name))
+    with open(filename,'w') as f:
+        for s in scores:
+            f.write(separator.join(map(str, s)) + '\n')
 
-def end_game():
-    return render_template("end_game.html")
+def read_scores(filename, separator=','):
+    """reads scores and names from a file, and returns a list of each"""
+    scores = []
+    names = []
 
-def set_attempts():
-    user_attempts = make_response('User Attempts')
-    user_attempts.set_cookie('user_attempts_remaining','2')
-    return user_attempts
+    with open(filename) as f:
+        for score in f:
+            score, name = score.strip().split(separator)
+            scores.append(int(score))
+            names.append(name)
+    return scores, names
 
-def add_one_score():
-    global score
-    score += 1
-    
-def remove_attempt():
-    global attempts_remaining
-    attempts_remaining -= 1
+def sort_scores(scores, names, reverse_bool=True):
+    """sorts the scores from greatest to least and returns in a list of tuples format"""
+    return sorted(zip(scores,names), reverse=reverse_bool)
 
-def reset_attempts():
-    global attempts_remaining
-    attempts_remaining = 2
+def print_scores(score_list, separator=' ', top_amount=10):
+    """prints the number of leaderboard scores stated"""
+    for score_tuple in score_list[:top_amount]:
+        print(separator.join(map(str, score_tuple)))
 
-def skip_question():
-    global riddle_round
-    riddle_round += 1
-    global attempts_remaining
-    attempts_remaining = 2
-
-def shuffle_questions():
-    global question_asked
-    shuffle(question_asked)
+def has_better_score(score, scores, leaderboard_len=10):
+    """returns if the score should be written to a file"""
+    if (len(scores) > leaderboard_len and score >= scores[leaderboard_len - 1][0]) or len(scores) <= leaderboard_len:
+        return True
+    return False

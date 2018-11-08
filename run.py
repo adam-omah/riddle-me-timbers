@@ -5,15 +5,12 @@ from wtforms import Form
 import random
 from random import shuffle
 import utills
-from utills import write_to_file, add_one_score, remove_attempt, reset_attempts,skip_question
+from utills import write_to_file, write_score, read_scores, sort_scores, print_scores, has_better_score
 import json
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
-# this will later be the riddle data file. (probably json.)
-
-question_asked = [0,1,2,3,4,5,6,7,8,9,10,11,12]
 
     
 @app.route('/', methods=["GET", "POST"])
@@ -41,7 +38,8 @@ def check_if_session():
 def user(username):
     # check to see if a user is in session before going to the game page
     with open('data/questions.json') as json_data:
-        parsed_json = json.load(json_data)
+        quiz_file = json.load(json_data)
+    
     
     if g.user == None:
         return redirect("index.html")
@@ -50,7 +48,7 @@ def user(username):
     
     if request.method == "POST" :
         riddle_guess = request.form["riddle_guess"].lower()
-        if  riddle_guess == parsed_json[session["riddle_round"]]["answer"]:
+        if  riddle_guess == quiz_file[session["riddle_round"]]["answer"]:
             session["score"] += 1
             session["riddle_round"] += 1
             session.modified = True
@@ -63,17 +61,33 @@ def user(username):
             session["riddle_round"] += 1
             session["attempts_remaining"] = 2
             session.modified = True
+        elif session["riddle_round"] == 9:
+            scores, names = read_scores('highscore.txt',' , ')
+            sorted_scores = sort_scores(scores, names)
+            
+            new_name = session["username"]
+            new_score = session["score"]
+            if has_better_score(new_score, sorted_scores, 10):
+                write_score(new_score, new_name, sorted_scores, 'highscore.txt', ' , ')
+                
+            return render_template("end_game.html",
+                                    username = username,
+                                    current_score = session["score"],
+                                    names = names,
+                                    highscores = scores
+                                    )
+            
         else:
             session['attempts_remaining'] -= 1
             session.modified = True
             
     return render_template("single_player.html",
                             username = username,
-                            question = parsed_json[session["riddle_round"]]["question"], 
+                            question = quiz_file[session["riddle_round"]]["question"], 
                             current_score= session["score"], 
                             riddle_round= session["riddle_round"],
                             attempts_remaining = session["attempts_remaining"] + 1,
-                            answer = parsed_json[session["riddle_round"]]["answer"])
+                            answer = quiz_file[session["riddle_round"]]["answer"])
         
 
 
