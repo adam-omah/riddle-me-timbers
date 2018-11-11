@@ -9,16 +9,19 @@
 <body>
     <h1>Thanks for playing! {{ username }} </h1>
     <h2>Your Final score is {{ current_score }}</h2>
-    
-    <h2> The Highest Scores belong to {{ names }} </h2>
-    <h2> They scored {{ highscores }} </h2>
-    <tbody>
-        {% for row in highscores_users %}
-            <tr>
-              <td>{{ row[0]|tojson|safe }}</td>
-              <td>{{ row[1] }}</td>
-            </tr>
-        {% endfor %}
-    </tbody>
+    <table>
+        <tbody>
+                <tr>
+                  <td><h3>>High Scorers!</h3></td>
+                  <td><h3>What they Scored!</h3></td>
+                </tr>
+            {% for row_index in range(10) %}
+                <tr>
+                  <td>{{ highscored_users[row_index] }}</td>
+                  <td>{{ highscores_users[row_index] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </body>
 </html>

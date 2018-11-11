@@ -50,16 +50,20 @@ def user(username):
             
             new_name = username
             new_score = session["score"]
+            
             if has_better_score(new_score, sorted_scores, 9):
                 write_score(new_score, new_name, sorted_scores, 'data/highscore.txt', ' , ')
-            highscores_users = {"usernames":[names], "highscores":[scores]}
-            highscores_users = zip(highscores_users['usernames'], highscores_users['highscores'])
+                
+            sorted_scores = sort_scores(scores, names)
+            scores, names = read_scores('data/highscore.txt',' , ')
+                
             return render_template("end_game.html",
                                     username = username,
                                     current_score = session["score"],
                                     names = names,
                                     highscores = scores,
-                                    highscores_users = highscores_users
+                                    highscores_users = scores,
+                                    highscored_users = names
                                     )
     if request.method == "POST" :
         riddle_guess = request.form["riddle_guess"].lower()
