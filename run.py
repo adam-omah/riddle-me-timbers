@@ -5,7 +5,7 @@ from wtforms import Form
 import random
 from random import shuffle
 import utills
-from utills import write_to_file, write_score, read_scores, sort_scores, print_scores, has_better_score
+from utills import write_score, read_scores, sort_scores, print_scores, has_better_score
 import json
 
 app = Flask(__name__)
@@ -44,8 +44,23 @@ def user(username):
     if g.user == None:
         return redirect("index.html")
         
-    
-    
+    if session["riddle_round"] == 9:
+            scores, names = read_scores('data/highscore.txt',' , ')
+            sorted_scores = sort_scores(scores, names)
+            
+            new_name = username
+            new_score = session["score"]
+            if has_better_score(new_score, sorted_scores, 9):
+                write_score(new_score, new_name, sorted_scores, 'data/highscore.txt', ' , ')
+            highscores_users = {"usernames":[names], "highscores":[scores]}
+            highscores_users = zip(highscores_users['usernames'], highscores_users['highscores'])
+            return render_template("end_game.html",
+                                    username = username,
+                                    current_score = session["score"],
+                                    names = names,
+                                    highscores = scores,
+                                    highscores_users = highscores_users
+                                    )
     if request.method == "POST" :
         riddle_guess = request.form["riddle_guess"].lower()
         if  riddle_guess == quiz_file[session["riddle_round"]]["answer"]:
@@ -55,28 +70,12 @@ def user(username):
         elif riddle_guess == "skip":
             session["riddle_round"] += 1
             session.modified = True
-        elif session["riddle_round"] == 9:
+        elif session["riddle_round"] == 10:
             return render_template("end_game.html")
         elif session["attempts_remaining"] == 0:
             session["riddle_round"] += 1
             session["attempts_remaining"] = 2
             session.modified = True
-        elif session["riddle_round"] == 9:
-            scores, names = read_scores('highscore.txt',' , ')
-            sorted_scores = sort_scores(scores, names)
-            
-            new_name = session["username"]
-            new_score = session["score"]
-            if has_better_score(new_score, sorted_scores, 10):
-                write_score(new_score, new_name, sorted_scores, 'highscore.txt', ' , ')
-                
-            return render_template("end_game.html",
-                                    username = username,
-                                    current_score = session["score"],
-                                    names = names,
-                                    highscores = scores
-                                    )
-            
         else:
             session['attempts_remaining'] -= 1
             session.modified = True

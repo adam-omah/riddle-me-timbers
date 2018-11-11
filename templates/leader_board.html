@@ -12,13 +12,5 @@
     
     <h2> The Highest Scores belong to {{ names }} </h2>
     <h2> They scored {{ highscores }} </h2>
-    <tbody>
-        {% for row in highscores_users %}
-            <tr>
-              <td>{{ row[0]|tojson|safe }}</td>
-              <td>{{ row[1] }}</td>
-            </tr>
-        {% endfor %}
-    </tbody>
 </body>
 </html>

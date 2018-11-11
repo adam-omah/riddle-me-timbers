@@ -25,12 +25,12 @@ def sort_scores(scores, names, reverse_bool=True):
     """sorts the scores from greatest to least and returns in a list of tuples format"""
     return sorted(zip(scores,names), reverse=reverse_bool)
 
-def print_scores(score_list, separator=' ', top_amount=10):
+def print_scores(score_list, separator=' ', top_amount=9):
     """prints the number of leaderboard scores stated"""
     for score_tuple in score_list[:top_amount]:
         print(separator.join(map(str, score_tuple)))
 
-def has_better_score(score, scores, leaderboard_len=10):
+def has_better_score(score, scores, leaderboard_len=9):
     """returns if the score should be written to a file"""
     if (len(scores) > leaderboard_len and score >= scores[leaderboard_len - 1][0]) or len(scores) <= leaderboard_len:
         return True
