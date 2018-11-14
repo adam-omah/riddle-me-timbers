@@ -5,17 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Riddle Me Timbers! Game questions</title>
+    
+    <!-- Bootstrap Scripts and Style's -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <!-- /Bootstrap Scripts and Style's/ -->
+    
 </head>
 <body>
-    <h1>Welome, {{ username }} </h1>
-    <h2>Your Current score is {{ current_score }} <br> This is round {{ riddle_round }} you have {{ attempts_remaining }} attempts to complete this round</h2>
-    
-    <h2> This is your question: {{ question }} </h2>
-    <h2> This is your question: {{ answer }} </h2>
-    <form method="POST">
-        <label for="riddle_guess">Your Answer:</label>
-        <input type="text" id="riddle_guess" name="riddle_guess"/>
-        <button type="submit">Check Answer!</button>
-    </form>
+    <div class="container-fluid">
+        <div class="row">
+            <h1>Welome, {{ username }} </h1>
+            <h2>Your Current score is {{ current_score }} <br> This is round {{ riddle_round }} you have {{ attempts_remaining }} attempts to complete this round</h2>
+        </div>
+        <div class="row">
+            <h2> This is your question: {{ question }} </h2>
+            <h2> This is your question: {{ answer }} </h2>
+        </div>
+        <div class="row">
+            <form method="POST">
+                <label for="riddle_guess">Your Answer:</label>
+                <input type="text" id="riddle_guess" name="riddle_guess"/>
+                <button type="submit">Check Answer!</button>
+            </form>
+        </div>
+    </div>
 </body>
 </html>
