@@ -1,11 +1,14 @@
 import os
 from datetime import datetime
-from flask import Flask, render_template, make_response, request, redirect, session, g
+from flask import (Flask, render_template, make_response, 
+request, redirect, session, g)
 from wtforms import Form
 import random
 from random import shuffle
 import utills
-from utills import write_score, read_scores, sort_scores, print_scores, has_better_score
+from utills import (write_score, read_scores, sort_scores, print_scores, 
+has_better_score, start_game, correct_answer, skip_question, failed_all_attempts,
+remove_attempt)
 import json
 
 app = Flask(__name__)
@@ -17,11 +20,7 @@ app.secret_key = os.urandom(24)
 def index():
     session.pop('user', None)
     if request.method == ("POST"):
-        session['user'] = request.form['username']
-        session["score"] = 0
-        session["riddle_round"] = 0
-        session["attempts_remaining"] = 2
-        return redirect(request.form["username"])
+        start_game()
     return render_template("index.html")
 
 
@@ -43,7 +42,8 @@ def user(username):
     
     if g.user == None:
         return redirect("index.html")
-        
+    
+    # If end of game, check if user enters leaderboard/ displays leaderboard
     if session["riddle_round"] == 9:
             scores, names = read_scores('data/highscore.txt',' , ')
             sorted_scores = sort_scores(scores, names)
@@ -52,7 +52,8 @@ def user(username):
             new_score = session["score"]
             
             if has_better_score(new_score, sorted_scores, 9):
-                write_score(new_score, new_name, sorted_scores, 'data/highscore.txt', ' , ')
+                write_score(new_score, new_name, sorted_scores,
+                            'data/highscore.txt', ' , ')
                 
             sorted_scores = sort_scores(scores, names)
             scores, names = read_scores('data/highscore.txt',' , ')
@@ -65,24 +66,20 @@ def user(username):
                                     highscores_users = scores,
                                     highscored_users = names
                                     )
+    
+    # When user attempts questions, check if correct, if not remove attempt, 
+    # if correct add score & round, if no attempts remaining add round
+    
     if request.method == "POST" :
         riddle_guess = request.form["riddle_guess"].lower()
         if  riddle_guess == quiz_file[session["riddle_round"]]["answer"]:
-            session["score"] += 1
-            session["riddle_round"] += 1
-            session.modified = True
+            correct_answer()
         elif riddle_guess == "skip":
-            session["riddle_round"] += 1
-            session.modified = True
-        elif session["riddle_round"] == 10:
-            return render_template("end_game.html")
+            skip_question()
         elif session["attempts_remaining"] == 0:
-            session["riddle_round"] += 1
-            session["attempts_remaining"] = 2
-            session.modified = True
+            failed_all_attempts()
         else:
-            session['attempts_remaining'] -= 1
-            session.modified = True
+            remove_attempt()
             
     return render_template("single_player.html",
                             username = username,

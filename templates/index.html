@@ -13,22 +13,30 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <!-- /Bootstrap Scripts and Style's/ -->
     
+    <!-- Local CSS Files -->
+    <link rel="stylesheet" href="../css/style.css" />
+    <!-- /Local CSS Files/ -->
+    
 </head>
 <body>
     
     <div class="container-fluid">
-        <div class="row">
-            <div class="page-header">
+        <div class="row page-header-bg justify-content-center">
+            <div class="col-xs-6 page-header text-center">
                 <h1>Shiver Me Timbers!!! Another land lubber has come to steal some treasure!</h1>
             </div>
         </div>
-        <div class="row">
-            <div class="login-form">
-                <form method="POST">
-                    <label for="username">Username: </label>
-                    <input type="text" id="username" name="username"/>
-                    <button>Start the Game!</button>
-                </form>
+        
+        <div class="row text-center justify-content-center">
+            <div class="col-xs-4">
+                <div class="login-form">
+                    <h2>To start the game please enter your name</h2>
+                    <form method="POST">
+                        <label for="username">To start the game please enter your name:</label>
+                        <input type="text" id="username" name="username"/>
+                        <button type="button" class="btn btn-secondary">Start the Game!</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

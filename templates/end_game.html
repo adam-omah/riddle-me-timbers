@@ -13,6 +13,10 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <!-- /Bootstrap Scripts and Style's/ -->
     
+    <!-- Local CSS Files -->
+    <link rel="stylesheet" href="templates/style.css">
+    <!-- /Local CSS Files/ -->
+    
 </head>
 <body>
     <div class="container-fluid">
@@ -21,14 +25,17 @@
             <h2>Your Final score is {{ current_score }}</h2>
         </div>
         <div class="row">
-            <table>
+            <table class="table table-striped table-dark">
+                <thead>
+                    <tr>
+                      <th scope="col"><h3>>High Scorers!</h3></th>
+                      <th scope="col"><h3>What they Scored!</h3></th>
+                    </tr>
+                </thead>
                 <tbody>
-                        <tr>
-                          <td><h3>>High Scorers!</h3></td>
-                          <td><h3>What they Scored!</h3></td>
-                        </tr>
                     {% for row_index in range(10) %}
                         <tr>
+                          <th scope="row">[row_index]</th>
                           <td>{{ highscored_users[row_index] }}</td>
                           <td>{{ highscores_users[row_index] }}</td>
                         </tr>
