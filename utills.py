@@ -6,12 +6,8 @@ import json
 # Game Utills, game functions.
      
 # Initiate the game.
-def start_game():
-    session['user'] = request.form['username']
-    session["score"] = 0
-    session["riddle_round"] = 0
-    session["attempts_remaining"] = 2
-    return redirect(request.form["username"])
+
+    
 
 # If correct answer, add score & round
 def correct_answer():

@@ -7,7 +7,7 @@ import random
 from random import shuffle
 import utills
 from utills import (write_score, read_scores, sort_scores, print_scores, 
-has_better_score, start_game, correct_answer, skip_question, failed_all_attempts,
+has_better_score, correct_answer, skip_question, failed_all_attempts,
 remove_attempt)
 import json
 
@@ -20,7 +20,11 @@ app.secret_key = os.urandom(24)
 def index():
     session.pop('user', None)
     if request.method == ("POST"):
-        start_game()
+        session['user'] = request.form['username']
+        session["score"] = 0
+        session["riddle_round"] = 0
+        session["attempts_remaining"] = 2
+        return redirect(request.form["username"])
     return render_template("index.html")
 
 
@@ -86,8 +90,7 @@ def user(username):
                             question = quiz_file[session["riddle_round"]]["question"], 
                             current_score= session["score"], 
                             riddle_round= session["riddle_round"],
-                            attempts_remaining = session["attempts_remaining"] + 1,
-                            answer = quiz_file[session["riddle_round"]]["answer"])
+                            attempts_remaining = session["attempts_remaining"] + 1)
         
 
 

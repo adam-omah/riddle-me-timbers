@@ -1,7 +1,10 @@
-
 .row {
     padding: 100px 50px;
 }
 .page-header-bg{
+    background-image: url("discovery-3721111_1280.jpg")
+}
+
+#page-header-bg {
     background-image: url("discovery-3721111_1280.jpg")
 }
