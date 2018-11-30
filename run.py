@@ -25,7 +25,8 @@ def index():
         session["riddle_round"] = 0
         session["attempts_remaining"] = 2
         return redirect(request.form["username"])
-    return render_template("index.html")
+    else:
+        return render_template("index.html")
 
 
 # Set g.user to none before request, set g.user to user if user is in session

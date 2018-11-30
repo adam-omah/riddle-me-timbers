@@ -1,0 +1,40 @@
+
+/* ---- Home page ---- */
+
+.home-page-row {
+    padding: 17.9vh 50px;
+}
+.home-page-bg{
+    background-image: url("discovery-3721111_1280.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#home-page-header {
+    font-size: 3rem !important;
+    text-shadow: 0px 0px 10px black;
+}
+
+.page-text-onbg {
+    text-shadow: 0px 0px 10px black;
+}
+
+label {
+    font-size: 1.5em;
+}
+
+/* ---- /Home page ---- */
+
+/* ---- Questions page ---- */
+
+.questions-page-bg{
+    background-image: url("aaron-burden-261332-unsplash.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.row .questions-page-row .justify-content-center {
+    padding: 6vh 50px;
+}
+
+/* ---- Questions page ---- */

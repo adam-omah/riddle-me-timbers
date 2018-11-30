@@ -16,27 +16,26 @@
     <!-- Local CSS Files -->
     
     <!-- Fix for weird favicon ico bug =/ -->
-    <link rel="shortcut icon" href="#" />
-    <link rel="stylesheet" type="text/css" href="my_style.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/my_style.css') }}">
     
     <!-- /Local CSS Files/ -->
     
 </head>
 <body>
     
-    <div class="container-fluid">
-        <div class="row page-header-bg justify-content-center" id="page-header-bg">
-            <div class="col-xs-6 page-header text-center">
-                <h1>Shiver Me Timbers!!! Another land lubber has come to steal some treasure!</h1>
+    <div class="container-fluid home-page-bg">
+        <div class="row page-header-bg justify-content-center home-page-row">
+            <div class="col-xs-6 page-header text-center text-white">
+                <h1 class="page-header" id="home-page-header">Shiver Me Timbers!!!</br>Another land lubber has come to steal some treasure!</h1>
             </div>
         </div>
         
-        <div class="row text-center justify-content-center">
-            <div class="col-xs-4">
+        <div class="row text-center justify-content-center home-page-row">
+            <div class="col-xs-4 text-white page-text-onbg">
                 <div class="login-form">
                     <h2>To start the game please enter your name</h2>
                     <form method="POST">
-                        <label for="username">To start the game please enter your name:</label>
+                        <label for="username">Enter yer name if you dare:</label>
                         <input type="text" id="username" name="username"/>
                         <button class="btn btn-secondary">Start the Game!</button>
                     </form>
