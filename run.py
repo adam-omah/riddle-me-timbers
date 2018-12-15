@@ -2,7 +2,6 @@ import os
 from datetime import datetime
 from flask import (Flask, render_template, make_response, 
 request, redirect, session, g)
-from wtforms import Form
 import random
 from random import shuffle
 import utills
