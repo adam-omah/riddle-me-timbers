@@ -22,27 +22,27 @@
 </head>
 <body>
     <div class="container-fluid questions-page-bg">
-        <div class="row questions-page-row justify-content-center">
-            <div class="col-xs-8 text-center text-white">
-                <h1>Welome, {{ username }} </h1>
-                <h2>If you give up on a Riddle Type " Skip " to move on.</h2>
+        <div class="row questions-page-row justify-content-center header-row">
+            <div class="col-xs-8 text-center text-white page-text-onbg">
+                <h1 id="game-page-header">Welome, {{ username }} </h1>
+                <h2 id="game-page-sub-header">If you give up on a Riddle Type " Skip " to move on.</h2>
             </div>
         </div>
         <div class="row questions-page-row justify-content-center">
-            <div class="col-xs-8 text-center text-white">
-                <h2>Your Current score is {{ current_score }} <br> 
+            <div class="col-xs-8 text-center text-white page-text-onbg">
+                <h2 class="sub-headers">Your Current score is {{ current_score }} <br> 
                 This is round {{ riddle_round }} you have 
                 {{ attempts_remaining }} attempts to complete this round
                 </h2>
             </div>
         </div>
         <div class="row questions-page-row justify-content-center">
-            <div class="col-xs-8 text-center text-white">
-                <h2> This is your question: {{ question }} </h2>
+            <div class="col-xs-8 text-center text-white page-text-onbg">
+                <h2 class="sub-headers"> This is your question: {{ question }} </h2>
             </div>
         </div>
         <div class="row questions-page-row justify-content-center">
-            <div class="col-xs-8 text-center text-white">
+            <div class="col-xs-8 text-center text-white page-text-onbg sub-headers">
                 <form method="POST">
                     <label for="riddle_guess">Your Answer:</label>
                     <input type="text" id="riddle_guess" name="riddle_guess"/>

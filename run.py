@@ -52,15 +52,14 @@ def user(username):
             scores, names = read_scores('data/highscore.txt',' , ')
             sorted_scores = sort_scores(scores, names)
             
-            new_name = username
+            new_name = session["user"]
             new_score = session["score"]
             
             if has_better_score(new_score, sorted_scores, 9):
                 write_score(new_score, new_name, sorted_scores,
                             'data/highscore.txt', ' , ')
-                
-            sorted_scores = sort_scores(scores, names)
-            scores, names = read_scores('data/highscore.txt',' , ')
+                scores, names = read_scores('data/highscore.txt',' , ')
+                sorted_scores = sort_scores(scores, names)
                 
             return render_template("end_game.html",
                                     username = username,

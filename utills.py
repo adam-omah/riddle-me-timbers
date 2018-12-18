@@ -1,18 +1,14 @@
 from flask import make_response, session, request, redirect
 import json
 
-     
-     
-# Game Utills, game functions.
-     
-# Initiate the game.
 
-    
+# Game Utills, game functions.
 
 # If correct answer, add score & round
 def correct_answer():
     session["score"] += 1
     session["riddle_round"] += 1
+    session["attempts_remaining"] = 2
     session.modified = True
 
 # If user skips question, add one to round.

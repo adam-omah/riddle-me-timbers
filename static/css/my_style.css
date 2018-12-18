@@ -2,7 +2,7 @@
 /* ---- Home page ---- */
 
 .home-page-row {
-    padding: 17.9vh 50px;
+    padding: 50px;
 }
 .home-page-bg{
     background-image: url("discovery-3721111_1280.jpg");
@@ -11,16 +11,20 @@
 }
 
 #home-page-header {
-    font-size: 3rem !important;
-    text-shadow: 0px 0px 10px black;
+    font-size: 5rem !important;
+    text-shadow: 2px 2px 5px black;
 }
 
 .page-text-onbg {
-    text-shadow: 0px 0px 10px black;
+    text-shadow: 2px 2px 5px black;
 }
 
 label {
-    font-size: 1.5em;
+    font-size: 2em !important;
+}
+
+.container-fluid {
+    min-height: 100vh;
 }
 
 /* ---- /Home page ---- */
@@ -37,4 +41,37 @@ label {
     padding: 6vh 50px;
 }
 
+#game-page-header {
+    font-size: 5rem !important;
+}
+
+.sub-headers {
+    font-size: 2.5rem !important;
+}
+
+.row.questions-page-row.justify-content-center {
+    padding: 20px 0px;
+    margin: 0px 40px;
+    background: rgba(0, 0, 0, 0.37);
+}
+
+.row.questions-page-row.justify-content-center.header-row{
+        padding-top: 40px;
+}
+
 /* ---- Questions page ---- */
+
+#endgame-page-header {
+    font-size: 4rem !important;
+}
+
+.endgam-page-bg {
+    background-image: url("ocean-2051859_960_720.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+/* ---- End Game page ---- */
+
+
+
