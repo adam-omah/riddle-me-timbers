@@ -54,6 +54,8 @@ This is achieve by simple prompts to the user to enter their username (Used for 
 This project is deployed on [Heroku](https://shiver-me-timbers.herokuapp.com/) it is linked to the Git Repoistory
 on [Github](https://github.com/adam-omah/riddle-me-timbers) for which the files are stored as a back up.
 
+To Deploy this App, you will need the modules found in Requirements.txt, and then use the run.py file to initiate the application.
+
 ## Credits
 ******
 
