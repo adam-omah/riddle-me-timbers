@@ -2,25 +2,66 @@
 
 ******
 
-Pirate Themed Riddle me this game, that allows multiple users to play at once attempting to Answer the presented Riddle.
-Players will get a point per answer and after a set time the player with the most points will win the round!
+Pirate Themed Riddle me this game, that allows users to play a quiz attempting to Answer the presented Riddle.
+Players will get a point per answer and after ten rounds the player's score will be compared to the current leaderboard.
+If the user gets a highscore they will be added to the leader board as a high scorer!
 
 The game will be created with Python and Flask Framework.
 
-Questions taken from [Pirate questions for kids](http://riddles-for-kids.org/12-pirate-riddles-for-kids/)
 
 
-## User's Journey:
 
+## UX
 ******
 
-Upon a user entering the application they will be asked for their username, once inputted the game will begin.
-A user will be presented with either a text or visual riddle and they will have a form field to enter their guesses to the riddle in,
-If the guess is the correct answer a point will be added to the user's name in the leaderboard.
-If the guess is incorrect the answer will be stored in the area below the riddle itself.
-Only the first user to get the answer correct will be awarded the point.
-After which another riddle will be presented and the game continues.
-The game will either exit after a set period of time or upon pressing a Leave game button.
+This application is styled by a single full width page on desktop, with imagry as background and 
+the content centrally aligned. This website is for user's to enjoy a Python Quiz game with a pirate themed setting.
+This is achieve by simple prompts to the user to enter their username (Used for tracking & Identification later on).
+
+* Upon which the user is imediately brought to the game page, where they will be asked a series of Pirate based questions.
+* The user will be given the choice to answer the question, in which they have 3 attempts to get it correct before failing that round 
+* or they may chose to "Skip" the question given for which the round will end & proceed to the next.
+* After 10 questions the user will be brought to the leaderboard or end game screen in which if their score was greater than the scores currently there they will be recorded as a high scorer.
+
+
+## Features
+******
+
+### Existing Features
+* Username - allows users to choose their name for the entirety of the game.
+* score & attempts - user is displayed their score and attempts remaining for their current round.
+* Riddles presented - user is given a riddle to solve.
+* Answer Input - user guesses the riddle presented, this is then checked against the correct answer for the riddle.
+* Round Counter- as the rounds progress, this keeps track of the users progress.
+* End game - when user finishes round 10, they are redirected to the end game page.
+* Leader board - List of the top ten scorers.
+
+
+### Features Left to Implement
+* Button on Leaderboard/end game page to re-initiate the game for the user.
+
+
+## Technologies Used
+******
+
+* [Python](https://www.python.org/)
+        Python Coding Language, Using the [Flask Framework](http://flask.pocoo.org/) to render page templates with the current user data.
+
+
+## Deployment
+******
+
+This project is deployed on [Heroku](https://shiver-me-timbers.herokuapp.com/) it is linked to the Git Repoistory
+on [Github](https://github.com/adam-omah/riddle-me-timbers) for which the files are stored as a back up.
+
+## Credits
+******
+
+### Content
+*  Questions taken from [Pirate questions for kids](http://riddles-for-kids.org/12-pirate-riddles-for-kids/)
+
+### Media
+* Media files were found on [Unsplash](https://unsplash.com/)
 
 
 
